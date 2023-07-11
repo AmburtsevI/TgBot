@@ -1,29 +1,30 @@
-import TelegramBot from "node-telegram-bot-api";
-import "dotenv/config";
+import { chatBot, channelBot } from './utils/botsEnterPoint.js'
 import mongoose from "mongoose";
 import PortfolioModel from "./Models/PortfolioModel.js";
 import downloader from "./middleware/downloader.js";
 import { mainMenuOptions }  from "./middleware/inline_keyboard.js";
+import { menuRouter } from './middleware/menuRouter.js';
 
 mongoose
 	.connect(process.env.MONGODB_CONNECT)
 	.then(() => console.log("db connected"))
 	.catch("db errored");
 
-const channelBot = new TelegramBot(process.env.CHANNEL_BOT_TOKEN, { polling: true });
-const chatBot = new TelegramBot(process.env.CHAT_BOT_TOKEN, { polling: true });
 
 chatBot.setMyCommands([
-	{command: '/start', description: 'Начальное приветствие'},
-	{command: '/info', description: 'Получить информацию о пользователе'},
-	{command: '/game', description: 'Игра угадай цифру'},
+	{
+		command: '/start', 
+		description: 'Открыть меню'
+	},
 ])
 
+
 /*
- * Канал UNDERWORLD
+ * --------------------------------	
+ * 		  Канал UNDERWORLD
+ * --------------------------------	
  */
 
-chatBot.getCustomEmojiStickers(['5897948935971933748']).then()
 
 const startChannelBot = async () => {
 	channelBot.on("channel_post", async (msg) => {
@@ -52,7 +53,9 @@ const startChannelBot = async () => {
 };
 
 /*
- * Бот Underworld
+ * --------------------------------	
+ * 		   Бот UNDERWORLD
+ * --------------------------------	
  */
 
 const startChatBot = () => {
@@ -65,13 +68,11 @@ const startChatBot = () => {
 	chatBot.on('callback_query', msg => {
 		console.log(msg)
 		chatBot.answerCallbackQuery(msg.id).then(() => {
-			if (msg.data == 'about') {
-			  chatBot.sendMessage(msg.message.chat.id, 'Tapped');
-			}
+			menuRouter(msg.message.chat.id, msg.data)
 		  })
 	})
 };
 
-
 startChannelBot()
 startChatBot()
+
