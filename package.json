@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "tgbottest",
   "version": "1.0.0",
@@ -20,3 +21,27 @@
     "nodemon": "^3.0.1"
   }
 }
+=======
+{
+  "name": "tgbottest",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "fs": "^0.0.1-security",
+    "mongoose": "^7.3.2",
+    "node-fetch": "^3.3.1",
+    "node-telegram-bot-api": "^0.61.0",
+    "nodemon": "^3.0.1"
+  }
+}
+>>>>>>> 7aa9916557873b2383769cdc2639b969bf8601a4
